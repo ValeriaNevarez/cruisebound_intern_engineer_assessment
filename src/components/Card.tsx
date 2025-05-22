@@ -1,3 +1,20 @@
+import Image from "next/image";
+
+function getCityFromLocation(location: string): string {
+  return location
+    .replace(/\s*\([^)]*\)/g, "")
+    .split(",")[0]
+    .trim()
+    .replace(/Fort\s+/g, "Ft. ")
+    .split(" ")
+    .map((word) => {
+      // Skip words that are already properly formatted (like Ft.)
+      if (word.endsWith(".")) return word;
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    })
+    .join(" ");
+}
+
 interface CardProps {
   title: string;
   destination: string;
@@ -28,13 +45,16 @@ export default function Card({
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden flex">
       {/* Left side - Image */}
-      <div className="relative w-72">
-        <img
+      <div className="relative w-72 h-[300px]">
+        <Image
           src={imageUrl}
           alt={title}
-          className="w-full h-full object-cover"
+          fill
+          sizes="(max-width: 768px) 100vw, 288px"
+          className="object-cover"
+          priority
         />
-        <div className="absolute top-2 left-2 bg-black/50 text-white px-2 py-1 rounded">
+        <div className="absolute top-2 left-2 bg-black/50 text-white px-2 py-1 rounded z-10">
           {date}
         </div>
       </div>
@@ -47,7 +67,15 @@ export default function Card({
             <h3 className="text-xl font-semibold">{title}</h3>
             {logo && (
               <div className="flex flex-col items-end gap-1">
-                <img src={logo} alt="Cruise Line Logo" className="h-6 w-auto" />
+                <div className="relative h-6 w-24">
+                  <Image
+                    src={logo}
+                    alt="Cruise Line Logo"
+                    fill
+                    sizes="96px"
+                    className="object-contain"
+                  />
+                </div>
                 {line && <span className="text-gray-600 text-sm">{line}</span>}
               </div>
             )}
@@ -65,7 +93,8 @@ export default function Card({
                     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                   </svg>
                   <span className="text-sm text-gray-600">
-                    <span className="font-bold">{rating}</span> {reviews} reviews
+                    <span className="font-bold">{rating}</span> {reviews}{" "}
+                    reviews
                   </span>
                 </div>
               )}
@@ -75,8 +104,8 @@ export default function Card({
           {route.length > 0 && (
             <div className="flex items-center gap-2 text-gray-600 mb-4">
               {route.map((stop, index) => (
-                <span key={stop} className="flex items-center">
-                  {stop}
+                <span key={`${stop}-${index}`} className="flex items-center">
+                  {getCityFromLocation(stop)}
                   {index < route.length - 1 && (
                     <svg
                       className="w-3 h-3 mx-1 text-blue-400 flex items-center"
