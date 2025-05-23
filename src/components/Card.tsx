@@ -99,9 +99,9 @@ export default function Card({
           </div>
           <div className="mb-3">
             <div className="text-gray-700 flex items-center gap-2">
-              {destination} {nights} nights{" "}
+              <span>{destination}</span><span className="ml-2">{nights} nights</span>
               {rating > 0 && (
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1 ml-4">
                   <svg
                     className="w-4 h-4 text-yellow-400"
                     fill="currentColor"
@@ -119,7 +119,7 @@ export default function Card({
           </div>
 
           {route.length > 0 && (
-            <div className="flex flex-wrap items-center gap-y-2 gap-x-2 text-gray-600 mb-4 max-h-[4.5rem]">
+            <div className="flex flex-wrap items-center gap-y-2 text-gray-600 mb-4 max-h-[4.5rem]">
               {route.map((stop, index) => (
                 <span key={`${stop}-${index}`} className="flex items-center text-sm">
                   {getCityFromLocation(stop)}
