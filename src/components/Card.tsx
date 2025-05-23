@@ -119,9 +119,9 @@ export default function Card({
           </div>
 
           {route.length > 0 && (
-            <div className="flex items-center gap-2 text-gray-600 mb-4">
+            <div className="flex flex-wrap items-center gap-y-2 gap-x-2 text-gray-600 mb-4 max-h-[4.5rem]">
               {route.map((stop, index) => (
-                <span key={`${stop}-${index}`} className="flex items-center">
+                <span key={`${stop}-${index}`} className="flex items-center text-sm">
                   {getCityFromLocation(stop)}
                   {index < route.length - 1 && (
                     <svg
