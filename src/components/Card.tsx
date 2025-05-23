@@ -1,4 +1,5 @@
 import Image from "next/image";
+import type { Sailing } from "@/components/SailingsInterface";
 
 const DEFAULT_IMAGE_URL = "/default_ship_image.jpg";
 const SEABOURN_DEFAULT_IMAGE = "/seabourn_logo.jpg";
@@ -61,48 +62,28 @@ function convertTitleToPascalCase(title: string): string {
 }
 
 interface CardProps {
-  name: string;
-  region: string;
-  duration: number;
-  rating?: number;
-  reviews?: number;
-  itinerary?: string[];
-  price?: number;
-  image: string;
-  departure_date: string;
-  return_date: string;
-  logo?: string;
-  ship_name: string;
+  sailing: Sailing;
 }
 
+
 export default function Card({
-  name,
-  region,
-  duration,
-  rating = 0,
-  reviews = 0,
-  itinerary = [],
-  price,
-  image,
-  departure_date,
-  return_date,
-  logo,
-  ship_name,
+  sailing
 }: CardProps) {
-  return (
+
+  return sailing && (
     <div className="bg-white rounded-lg shadow-md overflow-hidden flex">
       {/* Left side - Image */}
       <div className="relative w-72 h-[300px]">
         <Image
-          src={image ? image : DEFAULT_IMAGE_URL}
-          alt={name}
+          src={sailing.ship.image || DEFAULT_IMAGE_URL}
+          alt={sailing.name}
           fill
           sizes="(max-width: 768px) 100vw, 288px"
           className="object-cover"
           priority
         />
         <div className="absolute top-2 left-2 bg-black/50 text-white px-2 py-1 rounded z-10">
-          {formatDateRange(departure_date, return_date)}
+          {formatDateRange(sailing.departureDate, sailing.returnDate)}
         </div>
       </div>
 
@@ -111,25 +92,25 @@ export default function Card({
         {/* Main content */}
         <div className="p-6 flex-1">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-xl font-semibold">{convertTitleToPascalCase(name)}</h3>
+            <h3 className="text-xl font-semibold">{convertTitleToPascalCase(sailing.name)}</h3>
 
             <div className="flex flex-col items-end gap-1">
               <div className="relative h-6 w-24">
                 <Image
-                  src={logo ? logo : getLogoByLine(ship_name)}
+                  src={sailing.ship.line.logo || getLogoByLine(sailing.ship.line.name)}
                   alt="Cruise Line Logo"
                   fill
                   sizes="96px"
                   className="object-contain"
                 />
               </div>
-              {ship_name && <span className="text-gray-600 text-sm">{ship_name}</span>}
+              {sailing.ship?.line?.name && <span className="text-gray-600 text-sm">{sailing.ship.line.name}</span>}
             </div>
           </div>
           <div className="mb-3">
             <div className="text-gray-700 flex items-center gap-2">
-              <span>{region}</span><span className="ml-2">{duration} nights</span>
-              {rating > 0 && (
+              <span>{sailing.region}</span><span className="ml-2">{sailing.duration} nights</span>
+              {sailing.ship?.rating && sailing.ship.rating > 0 && (
                 <div className="flex items-center gap-1 ml-4">
                   <svg
                     className="w-4 h-4 text-yellow-400"
@@ -139,7 +120,7 @@ export default function Card({
                     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                   </svg>
                   <span className="text-sm text-gray-600">
-                    <span className="font-bold">{rating}</span> {reviews}{" "}
+                    <span className="font-bold">{sailing.ship.rating}</span> {sailing.ship.reviews}{" "}
                     reviews
                   </span>
                 </div>
@@ -147,12 +128,12 @@ export default function Card({
             </div>
           </div>
 
-          {itinerary.length > 0 && (
+          {sailing.itinerary.length > 0 && (
             <div className="flex flex-wrap items-center gap-y-2 text-gray-600 mb-4 max-h-[4.5rem]">
-              {itinerary.map((stop, index) => (
+              {sailing.itinerary.map((stop, index) => (
                 <span key={`${stop}-${index}`} className="flex items-center text-sm">
                   {getCityFromLocation(stop)}
-                  {index < itinerary.length - 1 && (
+                  {index < sailing.itinerary.length - 1 && (
                     <svg
                       className="w-3 h-3 mx-1 text-blue-400 flex items-center"
                       fill="none"
@@ -176,10 +157,10 @@ export default function Card({
         {/* Gray footer */}
 
         <div className="bg-gray-50 p-6 border-t border-gray-100 flex justify-end">
-          {price && (
+          {sailing.price && (
             <div className="text-right mr-8">
               <p className="text-sm text-gray-600">Interior from</p>
-              <p className="text-lg font-bold">${price}</p>
+              <p className="text-lg font-bold">${sailing.price}</p>
             </div>
           )}
           <button className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition-colors">

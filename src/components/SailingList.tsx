@@ -1,21 +1,7 @@
 import { useState } from 'react';
 import Card from './Card';
 import Pagination from './Pagination';
-
-interface Sailing {
-  name: string;
-  region: string;
-  duration: number;
-  rating?: number;
-  reviews?: number;
-  itinerary?: string[];
-  price?: number;
-  image: string;
-  departure_date: string;
-  return_date: string;
-  logo?: string;
-  ship_name: string;
-}
+import type { Sailing } from "@/components/SailingsInterface";
 
 interface SailingListProps {
   sailings: Sailing[];
@@ -42,8 +28,8 @@ export default function SailingList({ sailings }: SailingListProps) {
       <div className="space-y-4">
         {currentSailings.map((sailing, index) => (
           <Card
-            key={`${sailing.ship_name}-${sailing.departure_date}-${index}`}
-            {...sailing}
+            key={`${sailing.name}-${sailing.departureDate}-${index}`}
+            sailing={sailing}
           />
         ))}
       </div>
