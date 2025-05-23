@@ -17,6 +17,7 @@ async function getSailings(): Promise<Sailing[]> {
     }
 
     const data = await res.json();
+    // TODO: Add type guard to ensure data.results is an array of Sailing.
     return data.results as Sailing[];
   } catch (error) {
     console.error("Error fetching sailings:", error);
