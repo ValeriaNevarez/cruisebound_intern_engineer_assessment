@@ -1,5 +1,5 @@
 import HomePage from "@/components/HomePage";
-import type { Sailing } from "@/components/SailingsInterface";
+import type Sailing from "@/components/SailingsInterface";
 import { Suspense } from "react";
 
 async function getSailings(): Promise<Sailing[]> {
