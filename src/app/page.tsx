@@ -34,24 +34,25 @@ async function getCruises() {
 }
 
 export default async function Home() {
-  const cruises = await getCruises();
+  const sailings = await getCruises();
   
   return (
     <div className="container mx-auto px-4 py-8">
-        {cruises.map((cruise, index) => (
+        {sailings.map((sailing, index) => (
           <Card 
             key={index}
-            title={cruise.name}
-            destination={cruise.region}
-            nights={cruise.duration}
-            rating={cruise.ship.rating}
-            reviews={cruise.ship.reviews}
-            route={cruise.itinerary}
-            price={cruise.price}
-            imageUrl={cruise.ship.image}
-            date={`${new Date(cruise.departureDate).toLocaleDateString()} - ${new Date(cruise.returnDate).toLocaleDateString()}`}
-            logo={cruise.ship.line.logo}
-            line={cruise.ship.line.name}
+            name ={sailing.name}
+            region={sailing.region}
+            duration={sailing.duration}
+            rating={sailing.ship.rating}
+            reviews={sailing.ship.reviews}
+            itinerary={sailing.itinerary}
+            price={sailing.price}
+            image={sailing.ship.image}
+            departure_date={sailing.departureDate}
+            return_date={sailing.returnDate}
+            logo={sailing.ship.line.logo}
+            ship_name ={sailing.ship.line.name}
           />
         ))}
     </div>

@@ -4,12 +4,39 @@ const DEFAULT_IMAGE_URL = "/default_ship_image.jpg";
 const SEABOURN_DEFAULT_IMAGE = "/seabourn_logo.jpg";
 const DEFAULT_LOGO_IMAGE = "/default_logo_image.jpg";
 
+function formatDateRange(startDate: string, endDate: string): string {
+  // Ensure correct date by appending time and using UTC methods
+  const start = new Date(startDate + 'T00:00:00Z');
+  const end = new Date(endDate + 'T00:00:00Z');
+
+  const startMonth = start.toLocaleString('en-US', { month: 'short', timeZone: 'UTC' });
+  const endMonth = end.toLocaleString('en-US', { month: 'short', timeZone: 'UTC' });
+  const startDay = start.getUTCDate();
+  const endDay = end.getUTCDate();
+  const startYear = start.getUTCFullYear();
+  const endYear = end.getUTCFullYear();
+
+  // If years are different
+  if (startYear !== endYear) {
+    return `${startMonth} ${startDay}, ${startYear} - ${endMonth} ${String(endDay).padStart(2, '0')}, ${endYear}`;
+  }
+  
+  // If months are different
+  if (startMonth !== endMonth) {
+    return `${startMonth} ${startDay}-${endMonth} ${String(endDay).padStart(2, '0')}, ${startYear}`;
+  }
+  
+  // If only days are different
+  return `${startMonth} ${startDay}-${String(endDay).padStart(2, '0')}, ${startYear}`;
+}
+
 function getLogoByLine(line_name: string): string {
   if (line_name === "Seabourn Cruise Line") {
     return SEABOURN_DEFAULT_IMAGE;
   }
   return DEFAULT_LOGO_IMAGE;
 }
+
 
 function getCityFromLocation(location: string): string {
   return location
@@ -34,46 +61,48 @@ function convertTitleToPascalCase(title: string): string {
 }
 
 interface CardProps {
-  title: string;
-  destination: string;
-  nights: number;
+  name: string;
+  region: string;
+  duration: number;
   rating?: number;
   reviews?: number;
-  route?: string[];
+  itinerary?: string[];
   price?: number;
-  imageUrl: string;
-  date: string;
+  image: string;
+  departure_date: string;
+  return_date: string;
   logo?: string;
-  line: string;
+  ship_name: string;
 }
 
 export default function Card({
-  title,
-  destination,
-  nights,
+  name,
+  region,
+  duration,
   rating = 0,
   reviews = 0,
-  route = [],
+  itinerary = [],
   price,
-  imageUrl,
-  date,
+  image,
+  departure_date,
+  return_date,
   logo,
-  line,
+  ship_name,
 }: CardProps) {
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden flex">
       {/* Left side - Image */}
       <div className="relative w-72 h-[300px]">
         <Image
-          src={imageUrl ? imageUrl : DEFAULT_IMAGE_URL}
-          alt={title}
+          src={image ? image : DEFAULT_IMAGE_URL}
+          alt={name}
           fill
           sizes="(max-width: 768px) 100vw, 288px"
           className="object-cover"
           priority
         />
         <div className="absolute top-2 left-2 bg-black/50 text-white px-2 py-1 rounded z-10">
-          {date}
+          {formatDateRange(departure_date, return_date)}
         </div>
       </div>
 
@@ -82,24 +111,24 @@ export default function Card({
         {/* Main content */}
         <div className="p-6 flex-1">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-xl font-semibold">{convertTitleToPascalCase(title)}</h3>
+            <h3 className="text-xl font-semibold">{convertTitleToPascalCase(name)}</h3>
 
             <div className="flex flex-col items-end gap-1">
               <div className="relative h-6 w-24">
                 <Image
-                  src={logo ? logo : getLogoByLine(line)}
+                  src={logo ? logo : getLogoByLine(ship_name)}
                   alt="Cruise Line Logo"
                   fill
                   sizes="96px"
                   className="object-contain"
                 />
               </div>
-              {line && <span className="text-gray-600 text-sm">{line}</span>}
+              {ship_name && <span className="text-gray-600 text-sm">{ship_name}</span>}
             </div>
           </div>
           <div className="mb-3">
             <div className="text-gray-700 flex items-center gap-2">
-              <span>{destination}</span><span className="ml-2">{nights} nights</span>
+              <span>{region}</span><span className="ml-2">{duration} nights</span>
               {rating > 0 && (
                 <div className="flex items-center gap-1 ml-4">
                   <svg
@@ -118,12 +147,12 @@ export default function Card({
             </div>
           </div>
 
-          {route.length > 0 && (
+          {itinerary.length > 0 && (
             <div className="flex flex-wrap items-center gap-y-2 text-gray-600 mb-4 max-h-[4.5rem]">
-              {route.map((stop, index) => (
+              {itinerary.map((stop, index) => (
                 <span key={`${stop}-${index}`} className="flex items-center text-sm">
                   {getCityFromLocation(stop)}
-                  {index < route.length - 1 && (
+                  {index < itinerary.length - 1 && (
                     <svg
                       className="w-3 h-3 mx-1 text-blue-400 flex items-center"
                       fill="none"
