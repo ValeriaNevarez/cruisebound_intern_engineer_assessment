@@ -1,5 +1,16 @@
 import Image from "next/image";
 
+const DEFAULT_IMAGE_URL = "/default_ship_image.jpg";
+const SEABOURN_DEFAULT_IMAGE = "/seabourn_logo.jpg";
+const DEFAULT_LOGO_IMAGE = "/default_logo_image.jpg";
+
+function getLogoByLine(line_name: string): string {
+  if (line_name === "Seabourn Cruise Line") {
+    return SEABOURN_DEFAULT_IMAGE;
+  }
+  return DEFAULT_LOGO_IMAGE;
+}
+
 function getCityFromLocation(location: string): string {
   return location
     .replace(/\s*\([^)]*\)/g, "")
@@ -15,6 +26,13 @@ function getCityFromLocation(location: string): string {
     .join(" ");
 }
 
+function convertTitleToPascalCase(title: string): string {
+  return title
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ");
+}
+
 interface CardProps {
   title: string;
   destination: string;
@@ -26,7 +44,7 @@ interface CardProps {
   imageUrl: string;
   date: string;
   logo?: string;
-  line?: string;
+  line: string;
 }
 
 export default function Card({
@@ -47,7 +65,7 @@ export default function Card({
       {/* Left side - Image */}
       <div className="relative w-72 h-[300px]">
         <Image
-          src={imageUrl}
+          src={imageUrl ? imageUrl : DEFAULT_IMAGE_URL}
           alt={title}
           fill
           sizes="(max-width: 768px) 100vw, 288px"
@@ -64,21 +82,20 @@ export default function Card({
         {/* Main content */}
         <div className="p-6 flex-1">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-xl font-semibold">{title}</h3>
-            {logo && (
-              <div className="flex flex-col items-end gap-1">
-                <div className="relative h-6 w-24">
-                  <Image
-                    src={logo}
-                    alt="Cruise Line Logo"
-                    fill
-                    sizes="96px"
-                    className="object-contain"
-                  />
-                </div>
-                {line && <span className="text-gray-600 text-sm">{line}</span>}
+            <h3 className="text-xl font-semibold">{convertTitleToPascalCase(title)}</h3>
+
+            <div className="flex flex-col items-end gap-1">
+              <div className="relative h-6 w-24">
+                <Image
+                  src={logo ? logo : getLogoByLine(line)}
+                  alt="Cruise Line Logo"
+                  fill
+                  sizes="96px"
+                  className="object-contain"
+                />
               </div>
-            )}
+              {line && <span className="text-gray-600 text-sm">{line}</span>}
+            </div>
           </div>
           <div className="mb-3">
             <div className="text-gray-700 flex items-center gap-2">
