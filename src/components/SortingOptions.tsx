@@ -56,18 +56,18 @@ export default function SortingOptions({ onSortChange }: SortingOptionsProps) {
   return (
     <div className="relative ml-auto" ref={dropdownRef}>
       <div className="flex items-center gap-2">
-        <span className="text-gray-600 text-sm">Sort by</span>
+        <span className="text-black-600 text-lg font-medium">Sort by</span>
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center gap-1 bg-white px-3 py-1.5 rounded border border-gray-300 text-sm"
+          className="flex items-center gap-1 bg-white px-3 py-1.5 rounded border border-gray-300 text-sm shadow-md"
         >
           <div className="flex flex-col items-start">
-            <span className="font-medium">
+            <span className="font-medium text-base">
               {options.find((opt) => opt.id === activeOption)?.label}
             </span>
-            <span className="text-xs text-gray-500">{getDirectionLabel()}</span>
+            <span className="text-sm text-gray-500">{getDirectionLabel()}</span>
           </div>
-          <span className="ml-2">▼</span>
+          <span className="ml-2 text-gray-300">▼</span>
         </button>
       </div>
 
@@ -77,7 +77,7 @@ export default function SortingOptions({ onSortChange }: SortingOptionsProps) {
             <button
               key={option.id}
               onClick={() => handleSortChange(option.id as SortOption)}
-              className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-100
+              className={`w-full text-left px-4 py-2 text-base hover:bg-gray-100
                 ${
                   activeOption === option.id ? "text-blue-600" : "text-gray-700"
                 }`}
