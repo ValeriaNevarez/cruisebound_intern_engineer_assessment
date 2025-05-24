@@ -83,7 +83,7 @@ export default function Card({ sailing }: CardProps) {
     sailing && (
       <div className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col md:flex-row">
         {/* Left side - Image */}
-        <div className="relative w-full md:w-72 h-48 md:h-[300px]">
+        <div className="relative w-full md:w-72 h-48 md:h-auto">
           <Image
             src={sailing.ship.image || DEFAULT_IMAGE_URL}
             alt={sailing.name}
@@ -178,7 +178,7 @@ export default function Card({ sailing }: CardProps) {
           </div>
 
           {/* Gray footer */}
-          <div className="bg-gray-50 p-4 md:p-6 border-t border-gray-100 flex flex-col md:flex-row items-center md:justify-end gap-4 md:gap-8">
+          <div className="bg-gray-50 px-4 py-3 md:px-6 md:py-4 border-t border-gray-100 flex flex-col md:flex-row items-center md:justify-end gap-4 md:gap-8">
             {sailing.price && (
               <div className="text-center md:text-right">
                 <p className="text-sm text-gray-600">Interior from</p>
