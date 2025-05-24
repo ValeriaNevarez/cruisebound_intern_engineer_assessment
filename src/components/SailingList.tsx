@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import Card from './Card';
-import Pagination from './Pagination';
+import { useState } from "react";
+import Card from "./Card";
+import Pagination from "./Pagination";
 import type Sailing from "@/components/SailingsInterface";
 
 interface SailingListProps {
@@ -14,7 +14,10 @@ export default function SailingList({ sailings }: SailingListProps) {
   // Calculate the current page's sailings
   const indexOfLastSailing = currentPage * itemsPerPage;
   const indexOfFirstSailing = indexOfLastSailing - itemsPerPage;
-  const currentSailings = sailings.slice(indexOfFirstSailing, indexOfLastSailing);
+  const currentSailings = sailings.slice(
+    indexOfFirstSailing,
+    indexOfLastSailing
+  );
 
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
@@ -43,4 +46,4 @@ export default function SailingList({ sailings }: SailingListProps) {
       />
     </div>
   );
-} 
+}

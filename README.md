@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Cruisebound Intern Engineer Assessment
 
-## Getting Started
+This is a modern web application built with Next.js 15.3.2 and React 19, utilizing TypeScript for type safety and Tailwind CSS for styling. The project is set up with a robust development environment including ESLint for code quality and various development tools for an optimal developer experience.
 
-First, run the development server:
+## 🚀 Technologies
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- [Next.js](https://nextjs.org/) (v15.3.2) - React framework for production
+- [React](https://react.dev/) (v19.0.0) - JavaScript library for user interfaces
+- [TypeScript](https://www.typescriptlang.org/) - Type safety and enhanced developer experience
+- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
+- [HeroIcons](https://heroicons.com/) - Beautiful hand-crafted SVG icons
+
+## 📦 Prerequisites
+
+- Node.js (Latest LTS version recommended)
+- npm or yarn package manager
+
+## 🛠️ Setup
+
+1. Clone the repository:
+   ```bash
+   git clone [repository-url]
+   cd cruisebound_intern_engineer_assessment
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+3. Start the development server:
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+
+The application will be available at `http://localhost:3000`.
+
+## 📜 Available Scripts
+
+- `npm run dev` - Starts the development server with Turbopack
+- `npm run build` - Creates an optimized production build
+- `npm run start` - Starts the production server
+- `npm run lint` - Runs ESLint to check code quality
+
+## 🚥 Project Structure
+
+```
+cruisebound_intern_engineer_assessment/
+├── src/
+│   ├── app/          # Next.js app directory
+│   └── components/   # React components
+├── public/           # Static files
+├── .next/           # Next.js build output
+└── ...config files
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🔧 Configuration Files
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `next.config.ts` - Next.js configuration
+- `tsconfig.json` - TypeScript configuration
+- `postcss.config.mjs` - PostCSS configuration for Tailwind
+- `eslint.config.mjs` - ESLint configuration
+- `package.json` - Project dependencies and scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📝 License
 
-## Learn More
+This project includes a license file. Please refer to the LICENSE file in the repository for more information.
 
-To learn more about Next.js, take a look at the following resources:
+## 🤝 Contributing
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+When contributing to this project:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Ensure all new code follows the existing code style
+2. Update documentation as needed
+3. Add tests for new features
+4. Ensure all tests pass before submitting pull requests

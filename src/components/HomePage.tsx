@@ -13,20 +13,24 @@ interface HomePageProps {
 
 export default function HomePage({ initialSailings }: HomePageProps) {
   const [sailings, setSailings] = useState<Sailing[]>(() => {
-    return [...initialSailings].sort((a, b) => 
-      new Date(a.departureDate).getTime() - new Date(b.departureDate).getTime()
+    return [...initialSailings].sort(
+      (a, b) =>
+        new Date(a.departureDate).getTime() -
+        new Date(b.departureDate).getTime()
     );
   });
   const [sortingOptionsResetKey, setSortingOptionsResetKey] = useState(0);
   const [sailingsResetKey, setSailingsResetKey] = useState(0);
 
   const handleReset = () => {
-    const sortedByDate = [...initialSailings].sort((a, b) => 
-      new Date(a.departureDate).getTime() - new Date(b.departureDate).getTime()
+    const sortedByDate = [...initialSailings].sort(
+      (a, b) =>
+        new Date(a.departureDate).getTime() -
+        new Date(b.departureDate).getTime()
     );
     setSailings(sortedByDate);
-    setSortingOptionsResetKey(prev => prev + 1);
-    setSailingsResetKey(prev => prev + 1);
+    setSortingOptionsResetKey((prev) => prev + 1);
+    setSailingsResetKey((prev) => prev + 1);
   };
 
   const handleSort = (
@@ -54,12 +58,15 @@ export default function HomePage({ initialSailings }: HomePageProps) {
     });
 
     setSailings(sortedSailings);
-    setSailingsResetKey(prev => prev + 1);
+    setSailingsResetKey((prev) => prev + 1);
   };
 
   return (
     <div className="container mx-auto px-4 lg:px-30 py-8 flex flex-col gap-6">
-      <SortingOptions onSortChange={handleSort} key={sortingOptionsResetKey + "sorting"} />
+      <SortingOptions
+        onSortChange={handleSort}
+        key={sortingOptionsResetKey + "sorting"}
+      />
       <div className="flex items-center gap-4">
         <TotalResultCount count={sailings.length} />
         <ResetSorting onReset={handleReset} />

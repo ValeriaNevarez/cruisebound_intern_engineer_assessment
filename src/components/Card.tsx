@@ -133,10 +133,17 @@ export default function Card({ sailing }: CardProps) {
                 <span className="ml-2">{sailing.duration} nights</span>
                 {sailing.ship?.rating && sailing.ship.rating > 0 && (
                   <div className="flex items-center gap-1 ml-0 md:ml-4">
-                    <StarIcon className="w-5 h-5 md:w-6 md:h-6 text-yellow-400 my-auto" aria-hidden="true" />
+                    <StarIcon
+                      className="w-5 h-5 md:w-6 md:h-6 text-yellow-400 my-auto"
+                      aria-hidden="true"
+                    />
                     <div className="text-gray-600">
-                      <span className="text-sm md:text-base font-bold">{sailing.ship.rating}</span>{" "}
-                      <span className="text-xs md:text-sm">{sailing.ship.reviews} reviews</span>
+                      <span className="text-sm md:text-base font-bold">
+                        {sailing.ship.rating}
+                      </span>{" "}
+                      <span className="text-xs md:text-sm">
+                        {sailing.ship.reviews} reviews
+                      </span>
                     </div>
                   </div>
                 )}
@@ -146,10 +153,7 @@ export default function Card({ sailing }: CardProps) {
             {sailing.itinerary.length > 0 && (
               <div className="flex flex-wrap items-center gap-y-2 text-black mb-4 text-sm md:text-base">
                 {sailing.itinerary.map((stop, index) => (
-                  <span
-                    key={`${stop}-${index}`}
-                    className="flex items-center"
-                  >
+                  <span key={`${stop}-${index}`} className="flex items-center">
                     {getCityFromLocation(stop)}
                     {index < sailing.itinerary.length - 1 && (
                       <ArrowRightIcon

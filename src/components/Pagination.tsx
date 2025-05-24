@@ -30,7 +30,7 @@ export default function Pagination({
     if (start > 1) {
       pages.push(1);
       if (start > 2) {
-        pages.push('start-ellipsis'); // Represents starting ellipsis
+        pages.push("start-ellipsis"); // Represents starting ellipsis
       }
     }
 
@@ -41,9 +41,9 @@ export default function Pagination({
 
     // Add the last page with ellipsis if needed
     const lastVisiblePage = pages[pages.length - 1];
-    if (typeof lastVisiblePage === 'number') {
+    if (typeof lastVisiblePage === "number") {
       if (totalPages - lastVisiblePage > 1) {
-        pages.push('end-ellipsis'); // Represents ending ellipsis
+        pages.push("end-ellipsis"); // Represents ending ellipsis
         pages.push(totalPages);
       } else if (totalPages - lastVisiblePage === 1) {
         // If there's just one page gap, show it directly without ellipsis
@@ -82,23 +82,25 @@ export default function Pagination({
       {getPageNumbers().map((pageNum) => (
         <button
           key={pageNum}
-          onClick={() => typeof pageNum === 'number' && onPageChange(pageNum)}
-          disabled={typeof pageNum === 'string'}
+          onClick={() => typeof pageNum === "number" && onPageChange(pageNum)}
+          disabled={typeof pageNum === "string"}
           className={`px-2 py-1 sm:px-3 sm:py-2 rounded-full text-sm sm:text-base font-bold ${
-            typeof pageNum === 'string'
+            typeof pageNum === "string"
               ? "cursor-default"
               : currentPage === pageNum
               ? "bg-white text-blue-600 hover:cursor-pointer"
               : "text-gray-600 hover:bg-gray-100 hover:cursor-pointer"
           }`}
         >
-          {typeof pageNum === 'string' ? "..." : pageNum}
+          {typeof pageNum === "string" ? "..." : pageNum}
         </button>
       ))}
 
       {/* Next button */}
       <button
-        onClick={() => currentPage < totalPages && onPageChange(currentPage + 1)}
+        onClick={() =>
+          currentPage < totalPages && onPageChange(currentPage + 1)
+        }
         disabled={currentPage === totalPages}
         className="p-1 sm:p-2 rounded-lg hover:bg-gray-100 hover:cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
         aria-label="Next page"
@@ -119,4 +121,4 @@ export default function Pagination({
       </button>
     </nav>
   );
-} 
+}

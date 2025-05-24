@@ -27,14 +27,11 @@ async function getSailings(): Promise<Sailing[]> {
 
 export default async function Home() {
   const sailings = await getSailings();
-  
+
   // Remove duplicate sailings because the API returns the same sailing multiple times.
   const uniqueSailings = Array.from(
     new Map(
-      sailings.map(sailing => [
-        JSON.stringify(sailing),
-        sailing
-      ])
+      sailings.map((sailing) => [JSON.stringify(sailing), sailing])
     ).values()
   );
 
