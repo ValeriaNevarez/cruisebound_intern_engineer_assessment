@@ -84,7 +84,7 @@ export default function Pagination({
           key={pageNum}
           onClick={() => typeof pageNum === 'number' && onPageChange(pageNum)}
           disabled={typeof pageNum === 'string'}
-          className={`px-3 py-2 rounded-full ${
+          className={`px-3 py-2 rounded-full font-bold ${
             typeof pageNum === 'string'
               ? "cursor-default"
               : currentPage === pageNum
