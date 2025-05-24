@@ -1,1 +1,10 @@
 @import "tailwindcss";
+
+:root {
+  --font-inter: var(--font-inter);
+}
+
+/* Use Inter as the default font */
+body {
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
