@@ -1,9 +1,13 @@
 "use client";
 
 interface ResetSortingProps {
+  /** Callback function to handle the reset action */
   onReset: () => void;
 }
 
+/**
+ * A button component that allows users to reset the current sorting state
+ */
 const ResetSorting = ({ onReset }: ResetSortingProps) => {
   return (
     <button

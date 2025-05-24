@@ -1,12 +1,16 @@
 import { useState } from "react";
 import Card from "./Card";
 import Pagination from "./Pagination";
-import type Sailing from "@/components/SailingsInterface";
+import type Sailing from "@/interfaces/SailingsInterface";
 
 interface SailingListProps {
+  /** The array of sailings to display */
   sailings: Sailing[];
 }
 
+/**
+ * A component that displays a list of sailings in a paginated format.
+ */
 export default function SailingList({ sailings }: SailingListProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;

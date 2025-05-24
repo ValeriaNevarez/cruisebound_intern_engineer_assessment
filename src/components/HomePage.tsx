@@ -3,32 +3,41 @@
 import { useState } from "react";
 import SortingOptions from "@/components/SortingOptions";
 import TotalResultCount from "@/components/TotalResultCount";
-import type Sailing from "@/components/SailingsInterface";
+import type Sailing from "@/interfaces/SailingsInterface";
 import SailingList from "@/components/SailingList";
 import ResetSorting from "@/components/ResetSorting";
 
 interface HomePageProps {
+  /** Initial array of sailings to display */
   initialSailings: Sailing[];
 }
 
+/**
+ * Homepage component that displays and manages a sortable list of sailings.
+ * Provides functionality to sort sailings by price, departure date, and duration,
+ * with the ability to reset to the default date-sorted view.
+ */
 export default function HomePage({ initialSailings }: HomePageProps) {
-  const [sailings, setSailings] = useState<Sailing[]>(() => {
-    return [...initialSailings].sort(
-      (a, b) =>
-        new Date(a.departureDate).getTime() -
-        new Date(b.departureDate).getTime()
+  const compareDates = (a: Sailing, b: Sailing) => {
+    return (
+      new Date(a.departureDate).getTime() - new Date(b.departureDate).getTime()
     );
+  };
+
+  const sortByDate = (sailings: Sailing[]) => {
+    return [...sailings].sort(compareDates);
+  };
+
+  /* Default sort is by departure date (nearest first) to show the most immediately available
+   * cruises to potential clients, improving conversion by highlighting trips they can book soon */
+  const [sailings, setSailings] = useState<Sailing[]>(() => {
+    return sortByDate(initialSailings);
   });
   const [sortingOptionsResetKey, setSortingOptionsResetKey] = useState(0);
   const [sailingsResetKey, setSailingsResetKey] = useState(0);
 
   const handleReset = () => {
-    const sortedByDate = [...initialSailings].sort(
-      (a, b) =>
-        new Date(a.departureDate).getTime() -
-        new Date(b.departureDate).getTime()
-    );
-    setSailings(sortedByDate);
+    setSailings(sortByDate(initialSailings));
     setSortingOptionsResetKey((prev) => prev + 1);
     setSailingsResetKey((prev) => prev + 1);
   };
@@ -45,9 +54,7 @@ export default function HomePage({ initialSailings }: HomePageProps) {
           comparison = a.price - b.price;
           break;
         case "departureDate":
-          comparison =
-            new Date(a.departureDate).getTime() -
-            new Date(b.departureDate).getTime();
+          comparison = compareDates(a, b);
           break;
         case "duration":
           comparison = a.duration - b.duration;
@@ -64,7 +71,7 @@ export default function HomePage({ initialSailings }: HomePageProps) {
   return (
     <div className="container mx-auto px-4 lg:px-30 py-8 flex flex-col gap-6">
       <SortingOptions
-        onSortChange={handleSort}
+        onSortChangeAction={handleSort}
         key={sortingOptionsResetKey + "sorting"}
       />
       <div className="flex items-center gap-4">

@@ -44,4 +44,4 @@ export default interface Sailing {
   readonly returnDate: string;
   /** Duration of the cruise in nights */
   readonly duration: number;
-}
+} 

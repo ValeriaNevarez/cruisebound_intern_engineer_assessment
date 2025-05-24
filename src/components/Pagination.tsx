@@ -1,10 +1,23 @@
 interface PaginationProps {
+  /** The currently active page number (1-based indexing) */
   currentPage: number;
+  /** Total number of items to paginate */
   totalItems: number;
+  /** Number of items to display per page (defaults to 10) */
   itemsPerPage?: number;
+  /** Callback function triggered when page changes, receives the new page number */
   onPageChange: (page: number) => void;
 }
 
+/**
+ * A responsive pagination component that displays page numbers and navigation controls.
+ * Features:
+ * - Shows up to 5 page numbers at a time
+ * - Displays first and last page numbers with ellipsis when needed
+ * - Includes previous/next navigation buttons
+ * - Fully responsive with different styles for mobile and desktop
+ * - Disables navigation when at first/last page
+ */
 export default function Pagination({
   currentPage,
   totalItems,
@@ -13,40 +26,40 @@ export default function Pagination({
 }: PaginationProps) {
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-  // Generate page numbers to display
+  // Generate page numbers to display.
   const getPageNumbers = () => {
     const pages: (number | string)[] = [];
-    const maxVisiblePages = 5; // Show max 5 page numbers at a time
+    const maxVisiblePages = 5; // Show max 5 page numbers at a time.
 
     let start = Math.max(1, currentPage - 2);
     const end = Math.min(totalPages, start + maxVisiblePages - 1);
 
-    // Adjust start if we're near the end
+    // Adjust start if we're near the end.
     if (end - start < maxVisiblePages - 1) {
       start = Math.max(1, end - maxVisiblePages + 1);
     }
 
-    // Add first page and ellipsis if needed
+    // Add first page and ellipsis if needed.
     if (start > 1) {
       pages.push(1);
       if (start > 2) {
-        pages.push("start-ellipsis"); // Represents starting ellipsis
+        pages.push("start-ellipsis"); // Represents starting ellipsis.
       }
     }
 
-    // Add the main sequence of pages
+    // Add the main sequence of pages.
     for (let i = start; i <= end; i++) {
       pages.push(i);
     }
 
-    // Add the last page with ellipsis if needed
+    // Add the last page with ellipsis if needed.
     const lastVisiblePage = pages[pages.length - 1];
     if (typeof lastVisiblePage === "number") {
       if (totalPages - lastVisiblePage > 1) {
-        pages.push("end-ellipsis"); // Represents ending ellipsis
+        pages.push("end-ellipsis"); // Represents ending ellipsis.
         pages.push(totalPages);
       } else if (totalPages - lastVisiblePage === 1) {
-        // If there's just one page gap, show it directly without ellipsis
+        // If there's just one page gap, show it directly without ellipsis.
         pages.push(totalPages);
       }
     }

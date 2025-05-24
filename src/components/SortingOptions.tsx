@@ -6,10 +6,14 @@ type SortOption = "price" | "departureDate" | "duration";
 type SortDirection = "asc" | "desc";
 
 interface SortingOptionsProps {
-  onSortChange: (option: SortOption, direction: SortDirection) => void;
+  /** The callback function to handle the sort change action */
+  onSortChangeAction: (option: SortOption, direction: SortDirection) => void;
 }
 
-export default function SortingOptions({ onSortChange }: SortingOptionsProps) {
+/**
+ * A component that allows users to sort a list of items by price, departure date, or duration.
+ */
+export default function SortingOptions({ onSortChangeAction }: SortingOptionsProps) {
   const [activeOption, setActiveOption] = useState<SortOption>("departureDate");
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
   const [isOpen, setIsOpen] = useState(false);
@@ -36,12 +40,12 @@ export default function SortingOptions({ onSortChange }: SortingOptionsProps) {
       // If selecting the same option, toggle direction
       const newDirection = sortDirection === "asc" ? "desc" : "asc";
       setSortDirection(newDirection);
-      onSortChange(option, newDirection);
+      onSortChangeAction(option, newDirection);
     } else {
       // If selecting a new option, set it as active with ascending direction
       setActiveOption(option);
       setSortDirection("asc");
-      onSortChange(option, "asc");
+      onSortChangeAction(option, "asc");
     }
     setIsOpen(false);
   };

@@ -1,92 +1,34 @@
 import Image from "next/image";
-import type Sailing from "@/components/SailingsInterface";
+import type Sailing from "@/interfaces/SailingsInterface";
 import { StarIcon, ArrowRightIcon } from "@heroicons/react/20/solid";
-
-const DEFAULT_IMAGE_URL = "/default_ship_image.jpg";
-const SEABOURN_DEFAULT_IMAGE = "/seabourn_logo.jpg";
-const DEFAULT_LOGO_IMAGE = "/default_logo_image.jpg";
-
-function formatDateRange(startDate: string, endDate: string): string {
-  // Ensure correct date by appending time and using UTC methods
-  const start = new Date(startDate + "T00:00:00Z");
-  const end = new Date(endDate + "T00:00:00Z");
-
-  const startMonth = start.toLocaleString("en-US", {
-    month: "short",
-    timeZone: "UTC",
-  });
-  const endMonth = end.toLocaleString("en-US", {
-    month: "short",
-    timeZone: "UTC",
-  });
-  const startDay = start.getUTCDate();
-  const endDay = end.getUTCDate();
-  const startYear = start.getUTCFullYear();
-  const endYear = end.getUTCFullYear();
-
-  // If years are different
-  if (startYear !== endYear) {
-    return `${startMonth} ${startDay}, ${startYear} - ${endMonth} ${String(
-      endDay
-    ).padStart(2, "0")}, ${endYear}`;
-  }
-
-  // If months are different
-  if (startMonth !== endMonth) {
-    return `${startMonth} ${startDay}-${endMonth} ${String(endDay).padStart(
-      2,
-      "0"
-    )}, ${startYear}`;
-  }
-
-  // If only days are different
-  return `${startMonth} ${startDay}-${String(endDay).padStart(
-    2,
-    "0"
-  )}, ${startYear}`;
-}
-
-function getLogoByLine(line_name: string): string {
-  if (line_name === "Seabourn Cruise Line") {
-    return SEABOURN_DEFAULT_IMAGE;
-  }
-  return DEFAULT_LOGO_IMAGE;
-}
-
-function getCityFromLocation(location: string): string {
-  return location
-    .replace(/\s*\([^)]*\)/g, "")
-    .split(",")[0]
-    .trim()
-    .replace(/Fort\s+/g, "Ft. ")
-    .split(" ")
-    .map((word) => {
-      // Skip words that are already properly formatted (like Ft.)
-      if (word.endsWith(".")) return word;
-      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-    })
-    .join(" ");
-}
-
-function convertTitleToPascalCase(title: string): string {
-  return title
-    .split(" ")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-    .join(" ");
-}
+import {
+  formatDateRange,
+  getCityFromLocation,
+  convertTitleToPascalCase,
+  DEFAULT_SHIP_IMAGE_URL,
+  getDefaultLogoByLine,
+} from "@/utils/FormatUtils";
 
 interface CardProps {
+  /** The sailing information to display in the card */
   sailing: Sailing;
 }
 
+/**
+ * Card component displays detailed information about a cruise sailing.
+ * It shows the ship's image, sailing dates, cruise line details, itinerary,
+ * ratings, and pricing in a responsive card layout.
+ */
 export default function Card({ sailing }: CardProps) {
   return (
     sailing && (
       <div className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col md:flex-row">
         {/* Left side - Image */}
         <div className="relative w-full md:w-72 h-48 md:h-auto">
+          {/* Fallback to default ship image if the sailing's ship image is not available
+              This ensures we always display an image even if the API returns null or undefined */}
           <Image
-            src={sailing.ship.image || DEFAULT_IMAGE_URL}
+            src={sailing.ship.image || DEFAULT_SHIP_IMAGE_URL}
             alt={sailing.name}
             fill
             sizes="(max-width: 768px) 100vw, 288px"
@@ -109,10 +51,12 @@ export default function Card({ sailing }: CardProps) {
 
               <div className="flex flex-row md:flex-col items-center md:items-end text-right gap-2 md:gap-1">
                 <div className="relative h-7 w-28 self-start md:self-auto">
+                  {/* Fallback to a default logo based on the cruise line name if the line's logo is not available
+                      This ensures brand consistency even when the API doesn't provide a custom logo */}
                   <Image
                     src={
                       sailing.ship.line.logo ||
-                      getLogoByLine(sailing.ship.line.name)
+                      getDefaultLogoByLine(sailing.ship.line.name)
                     }
                     alt="Cruise Line Logo"
                     fill
@@ -120,7 +64,7 @@ export default function Card({ sailing }: CardProps) {
                     className="object-contain"
                   />
                 </div>
-                {sailing.ship?.line?.name && (
+                {sailing.ship.line.name && (
                   <span className="text-gray-600 text-sm ml-auto md:ml-0">
                     {sailing.ship.line.name}
                   </span>
@@ -131,7 +75,7 @@ export default function Card({ sailing }: CardProps) {
               <div className="text-gray-700 flex flex-wrap items-center gap-2 text-base md:text-lg">
                 <span>{sailing.region}</span>
                 <span className="ml-2">{sailing.duration} nights</span>
-                {sailing.ship?.rating && sailing.ship.rating > 0 && (
+                {sailing.ship.rating && sailing.ship.rating > 0 && (
                   <div className="flex items-center gap-1 ml-0 md:ml-4">
                     <StarIcon
                       className="w-5 h-5 md:w-6 md:h-6 text-yellow-400 my-auto"
