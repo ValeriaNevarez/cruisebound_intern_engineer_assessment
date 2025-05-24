@@ -5,6 +5,7 @@ import SortingOptions from "@/components/SortingOptions";
 import TotalResultCount from "@/components/TotalResultCount";
 import type Sailing from "@/components/SailingsInterface";
 import SailingList from "@/components/SailingList";
+import ResetSorting from "@/components/ResetSorting";
 
 interface HomePageProps {
   initialSailings: Sailing[];
@@ -12,6 +13,15 @@ interface HomePageProps {
 
 export default function HomePage({ initialSailings }: HomePageProps) {
   const [sailings, setSailings] = useState<Sailing[]>(initialSailings);
+  const [resetKey, setResetKey] = useState(0);
+
+  const handleReset = () => {
+    const sortedByDate = [...initialSailings].sort((a, b) => 
+      new Date(a.departureDate).getTime() - new Date(b.departureDate).getTime()
+    );
+    setSailings(sortedByDate);
+    setResetKey(prev => prev + 1);
+  };
 
   const handleSort = (
     option: "price" | "departureDate" | "duration",
@@ -42,8 +52,11 @@ export default function HomePage({ initialSailings }: HomePageProps) {
 
   return (
     <div className="container mx-auto px-4 py-8 flex flex-col gap-6">
-      <SortingOptions onSortChange={handleSort} />
-      <TotalResultCount count={sailings.length} />
+      <SortingOptions onSortChange={handleSort} key={resetKey} />
+      <div className="flex items-center gap-4">
+        <TotalResultCount count={sailings.length} />
+        <ResetSorting onReset={handleReset} />
+      </div>
       <SailingList sailings={sailings} />
     </div>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 type SortOption = "price" | "departureDate" | "duration";
 type SortDirection = "asc" | "desc";
@@ -10,9 +10,23 @@ interface SortingOptionsProps {
 }
 
 export default function SortingOptions({ onSortChange }: SortingOptionsProps) {
-  const [activeOption, setActiveOption] = useState<SortOption>("price");
+  const [activeOption, setActiveOption] = useState<SortOption>("departureDate");
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
   const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const handleSortChange = (option: SortOption) => {
     if (option === activeOption) {
@@ -40,7 +54,7 @@ export default function SortingOptions({ onSortChange }: SortingOptionsProps) {
   ];
 
   return (
-    <div className="relative ml-auto">
+    <div className="relative ml-auto" ref={dropdownRef}>
       <div className="flex items-center gap-2">
         <span className="text-gray-600 text-sm">Sort by</span>
         <button
