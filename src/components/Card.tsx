@@ -107,7 +107,7 @@ export default function Card({ sailing }: CardProps) {
               </h3>
 
               <div className="flex flex-row md:flex-col items-center md:items-end text-right gap-2 md:gap-1">
-                <div className="relative h-7 w-28">
+                <div className="relative h-7 w-28 self-start md:self-auto">
                   <Image
                     src={
                       sailing.ship.line.logo ||
@@ -120,7 +120,7 @@ export default function Card({ sailing }: CardProps) {
                   />
                 </div>
                 {sailing.ship?.line?.name && (
-                  <span className="text-gray-600 text-sm">
+                  <span className="text-gray-600 text-sm ml-auto md:ml-0">
                     {sailing.ship.line.name}
                   </span>
                 )}
