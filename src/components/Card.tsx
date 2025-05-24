@@ -182,7 +182,10 @@ export default function Card({ sailing }: CardProps) {
             {sailing.price && (
               <div className="text-center md:text-right">
                 <p className="text-sm text-gray-600">Interior from</p>
-                <p className="text-lg md:text-2xl font-bold">${sailing.price}</p>
+                <p className="text-lg md:text-2xl font-bold">
+                  <span className="align-top text-sm">$</span>
+                  {sailing.price}
+                </p>
               </div>
             )}
             <button className="w-full md:w-auto bg-blue-500 text-lg text-white px-3.5 py-2 rounded hover:bg-blue-700 transition-colors cursor-pointer">
