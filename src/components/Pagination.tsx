@@ -15,7 +15,7 @@ export default function Pagination({
 
   // Generate page numbers to display
   const getPageNumbers = () => {
-    const pages = [];
+    const pages: (number | string)[] = [];
     const maxVisiblePages = 5; // Show max 5 page numbers at a time
 
     let start = Math.max(1, currentPage - 2);
@@ -26,8 +26,29 @@ export default function Pagination({
       start = Math.max(1, end - maxVisiblePages + 1);
     }
 
+    // Add first page and ellipsis if needed
+    if (start > 1) {
+      pages.push(1);
+      if (start > 2) {
+        pages.push('start-ellipsis'); // Represents starting ellipsis
+      }
+    }
+
+    // Add the main sequence of pages
     for (let i = start; i <= end; i++) {
       pages.push(i);
+    }
+
+    // Add the last page with ellipsis if needed
+    const lastVisiblePage = pages[pages.length - 1];
+    if (typeof lastVisiblePage === 'number') {
+      if (totalPages - lastVisiblePage > 1) {
+        pages.push('end-ellipsis'); // Represents ending ellipsis
+        pages.push(totalPages);
+      } else if (totalPages - lastVisiblePage === 1) {
+        // If there's just one page gap, show it directly without ellipsis
+        pages.push(totalPages);
+      }
     }
 
     return pages;
@@ -61,14 +82,17 @@ export default function Pagination({
       {getPageNumbers().map((pageNum) => (
         <button
           key={pageNum}
-          onClick={() => onPageChange(pageNum)}
+          onClick={() => typeof pageNum === 'number' && onPageChange(pageNum)}
+          disabled={typeof pageNum === 'string'}
           className={`px-3 py-2 rounded-lg ${
-            currentPage === pageNum
+            typeof pageNum === 'string'
+              ? "cursor-default"
+              : currentPage === pageNum
               ? "bg-blue-600 text-white"
               : "text-gray-600 hover:bg-gray-100"
           }`}
         >
-          {pageNum}
+          {typeof pageNum === 'string' ? "..." : pageNum}
         </button>
       ))}
 
