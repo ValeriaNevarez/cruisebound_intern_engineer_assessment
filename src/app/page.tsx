@@ -27,11 +27,21 @@ async function getSailings(): Promise<Sailing[]> {
 
 export default async function Home() {
   const sailings = await getSailings();
+  
+  // Remove duplicate sailings because the API returns the same sailing multiple times.
+  const uniqueSailings = Array.from(
+    new Map(
+      sailings.map(sailing => [
+        JSON.stringify(sailing),
+        sailing
+      ])
+    ).values()
+  );
 
   return (
     <main>
       <Suspense fallback={<div>Loading sailings...</div>}>
-        <HomePage initialSailings={sailings} />
+        <HomePage initialSailings={uniqueSailings} />
       </Suspense>
     </main>
   );
