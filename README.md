@@ -8,9 +8,9 @@ The UI is designed to match the spec in the instructions. I took the following d
 
 1. **Initial Page Sorting**
 
-   - Default sorting is by nearest departure date
-   - Shows most immediately available cruises to potential clients
-   - Improves conversion by highlighting trips that can be booked soon
+   - The default initial page is sorted by nearest departure date.
+     This is to show the most immediately available cruises to potential clients,
+     improving conversion by highlighting trips they can book soon.
 
 2. **Unique Sailings Display**
 
