@@ -19,7 +19,7 @@ export default function Pagination({
     const maxVisiblePages = 5; // Show max 5 page numbers at a time
 
     let start = Math.max(1, currentPage - 2);
-    let end = Math.min(totalPages, start + maxVisiblePages - 1);
+    const end = Math.min(totalPages, start + maxVisiblePages - 1);
 
     // Adjust start if we're near the end
     if (end - start < maxVisiblePages - 1) {
