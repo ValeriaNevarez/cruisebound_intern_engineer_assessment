@@ -92,7 +92,7 @@ export default function Card({ sailing }: CardProps) {
             className="object-cover"
             priority
           />
-          <div className="absolute top-2 left-2 bg-black/50 text-white px-2 py-1 rounded z-10 text-sm md:text-base">
+          <div className="absolute top-2 left-2 bg-black/60 text-white px-2 py-1 rounded z-10 text-sm md:text-base">
             {formatDateRange(sailing.departureDate, sailing.returnDate)}
           </div>
         </div>
@@ -107,7 +107,7 @@ export default function Card({ sailing }: CardProps) {
               </h3>
 
               <div className="flex flex-row md:flex-col items-center md:items-end text-right gap-2 md:gap-1">
-                <div className="relative h-6 w-24">
+                <div className="relative h-7 w-28">
                   <Image
                     src={
                       sailing.ship.line.logo ||
@@ -115,7 +115,7 @@ export default function Card({ sailing }: CardProps) {
                     }
                     alt="Cruise Line Logo"
                     fill
-                    sizes="96px"
+                    sizes="112px"
                     className="object-contain"
                   />
                 </div>
@@ -127,7 +127,7 @@ export default function Card({ sailing }: CardProps) {
               </div>
             </div>
             <div className="mb-3">
-              <div className="text-gray-700 flex flex-wrap items-center gap-2 text-sm md:text-base">
+              <div className="text-gray-700 flex flex-wrap items-center gap-2 text-base md:text-lg">
                 <span>{sailing.region}</span>
                 <span className="ml-2">{sailing.duration} nights</span>
                 {sailing.ship?.rating && sailing.ship.rating > 0 && (
@@ -139,9 +139,9 @@ export default function Card({ sailing }: CardProps) {
                     >
                       <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                     </svg>
-                    <span className="text-sm text-gray-600">
-                      <span className="font-bold">{sailing.ship.rating}</span>{" "}
-                      {sailing.ship.reviews} reviews
+                    <span className="text-gray-600">
+                      <span className="text-sm md:text-base font-bold">{sailing.ship.rating}</span>{" "}
+                      <span className="text-xs md:text-sm">{sailing.ship.reviews} reviews</span>
                     </span>
                   </div>
                 )}
@@ -149,7 +149,7 @@ export default function Card({ sailing }: CardProps) {
             </div>
 
             {sailing.itinerary.length > 0 && (
-              <div className="flex flex-wrap items-center gap-y-2 text-gray-600 mb-4 max-h-[4.5rem] text-sm md:text-base">
+              <div className="flex flex-wrap items-center gap-y-2 text-black mb-4 max-h-[4.5rem] text-sm md:text-base">
                 {sailing.itinerary.map((stop, index) => (
                   <span
                     key={`${stop}-${index}`}
@@ -158,7 +158,7 @@ export default function Card({ sailing }: CardProps) {
                     {getCityFromLocation(stop)}
                     {index < sailing.itinerary.length - 1 && (
                       <svg
-                        className="w-3 h-3 mx-1 text-blue-400 flex items-center"
+                        className="w-3 h-3 mx-1 text-blue-600 flex items-center"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -182,10 +182,10 @@ export default function Card({ sailing }: CardProps) {
             {sailing.price && (
               <div className="text-center md:text-right">
                 <p className="text-sm text-gray-600">Interior from</p>
-                <p className="text-lg md:text-xl font-bold">${sailing.price}</p>
+                <p className="text-lg md:text-2xl font-bold">${sailing.price}</p>
               </div>
             )}
-            <button className="w-full md:w-auto bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition-colors">
+            <button className="w-full md:w-auto bg-blue-500 text-lg text-white px-3.5 py-2 rounded hover:bg-blue-700 transition-colors cursor-pointer">
               See sailings
             </button>
           </div>
