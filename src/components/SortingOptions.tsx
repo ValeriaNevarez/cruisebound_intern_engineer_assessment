@@ -59,7 +59,7 @@ export default function SortingOptions({ onSortChange }: SortingOptionsProps) {
         <span className="text-black-600 text-lg font-medium">Sort by</span>
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center gap-1 bg-white px-3 py-1.5 rounded border border-gray-300 text-sm shadow-md"
+          className="flex items-center gap-1 bg-white px-3 py-1.5 rounded border border-gray-300 text-sm shadow-md cursor-pointer"
         >
           <div className="flex flex-col items-start">
             <span className="font-medium text-base">
