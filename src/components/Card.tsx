@@ -149,7 +149,7 @@ export default function Card({ sailing }: CardProps) {
             </div>
 
             {sailing.itinerary.length > 0 && (
-              <div className="flex flex-wrap items-center gap-y-2 text-black mb-4 max-h-[4.5rem] text-sm md:text-base">
+              <div className="flex flex-wrap items-center gap-y-2 text-black mb-4 text-sm md:text-base">
                 {sailing.itinerary.map((stop, index) => (
                   <span
                     key={`${stop}-${index}`}
