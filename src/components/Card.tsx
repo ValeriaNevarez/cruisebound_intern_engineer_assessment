@@ -103,7 +103,7 @@ export default function Card({ sailing }: CardProps) {
           {/* Main content */}
           <div className="p-4 md:p-6 flex-1">
             <div className="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-3">
-              <h3 className="text-xl md:text-2xl lg:text-3xl font-semibold leading-tight">
+              <h3 className="text-xl md:text-xl lg:text-2xl font-semibold leading-tight">
                 {convertTitleToPascalCase(sailing.name)}
               </h3>
 
