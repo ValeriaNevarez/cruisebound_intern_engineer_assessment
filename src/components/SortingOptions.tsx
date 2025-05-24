@@ -72,7 +72,7 @@ export default function SortingOptions({ onSortChange }: SortingOptionsProps) {
       </div>
 
       {isOpen && (
-        <div className="absolute mt-1 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-10">
+        <div className="absolute mt-1 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-20">
           {options.map((option) => (
             <button
               key={option.id}
