@@ -106,7 +106,7 @@ export default function Card({ sailing }: CardProps) {
                 {convertTitleToPascalCase(sailing.name)}
               </h3>
 
-              <div className="flex flex-col items-end gap-1">
+              <div className="flex flex-col items-end text-right gap-1">
                 <div className="relative h-6 w-24">
                   <Image
                     src={
