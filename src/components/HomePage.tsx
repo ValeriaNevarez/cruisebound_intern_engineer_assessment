@@ -58,7 +58,7 @@ export default function HomePage({ initialSailings }: HomePageProps) {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 flex flex-col gap-6">
+    <div className="container mx-auto px-4 lg:px-30 py-8 flex flex-col gap-6">
       <SortingOptions onSortChange={handleSort} key={sortingOptionsResetKey + "sorting"} />
       <div className="flex items-center gap-4">
         <TotalResultCount count={sailings.length} />
