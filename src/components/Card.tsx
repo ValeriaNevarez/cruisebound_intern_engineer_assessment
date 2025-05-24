@@ -22,7 +22,7 @@ interface CardProps {
 export default function Card({ sailing }: CardProps) {
   return (
     sailing && (
-      <div className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col md:flex-row">
+      <div className="bg-white rounded-lg shadow-[0_-10px_15px_-3px_rgba(0,0,0,0.1)] overflow-hidden flex flex-col md:flex-row">
         {/* Left side - Image */}
         <div className="relative w-full md:w-72 h-48 md:h-auto">
           {/* Fallback to default ship image if the sailing's ship image is not available
