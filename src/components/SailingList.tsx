@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Card from './Card';
 import Pagination from './Pagination';
-import type { Sailing } from "@/components/SailingsInterface";
+import type Sailing from "@/components/SailingsInterface";
 
 interface SailingListProps {
   sailings: Sailing[];
