@@ -60,7 +60,7 @@ export default function Pagination({
       <button
         onClick={() => currentPage > 1 && onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="p-1 sm:p-2 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="p-1 sm:p-2 rounded-lg hover:bg-gray-100 hover:cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
         aria-label="Previous page"
       >
         <svg
@@ -88,8 +88,8 @@ export default function Pagination({
             typeof pageNum === 'string'
               ? "cursor-default"
               : currentPage === pageNum
-              ? "bg-white text-blue-600"
-              : "text-gray-600 hover:bg-gray-100"
+              ? "bg-white text-blue-600 hover:cursor-pointer"
+              : "text-gray-600 hover:bg-gray-100 hover:cursor-pointer"
           }`}
         >
           {typeof pageNum === 'string' ? "..." : pageNum}
@@ -100,7 +100,7 @@ export default function Pagination({
       <button
         onClick={() => currentPage < totalPages && onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="p-1 sm:p-2 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="p-1 sm:p-2 rounded-lg hover:bg-gray-100 hover:cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
         aria-label="Next page"
       >
         <svg
