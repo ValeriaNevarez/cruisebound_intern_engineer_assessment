@@ -12,7 +12,11 @@ interface HomePageProps {
 }
 
 export default function HomePage({ initialSailings }: HomePageProps) {
-  const [sailings, setSailings] = useState<Sailing[]>(initialSailings);
+  const [sailings, setSailings] = useState<Sailing[]>(() => {
+    return [...initialSailings].sort((a, b) => 
+      new Date(a.departureDate).getTime() - new Date(b.departureDate).getTime()
+    );
+  });
   const [sortingOptionsResetKey, setSortingOptionsResetKey] = useState(0);
   const [sailingsResetKey, setSailingsResetKey] = useState(0);
 
