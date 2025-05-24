@@ -81,9 +81,9 @@ interface CardProps {
 export default function Card({ sailing }: CardProps) {
   return (
     sailing && (
-      <div className="bg-white rounded-lg shadow-md overflow-hidden flex">
+      <div className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col md:flex-row">
         {/* Left side - Image */}
-        <div className="relative w-72 h-[300px]">
+        <div className="relative w-full md:w-72 h-48 md:h-[300px]">
           <Image
             src={sailing.ship.image || DEFAULT_IMAGE_URL}
             alt={sailing.name}
@@ -92,7 +92,7 @@ export default function Card({ sailing }: CardProps) {
             className="object-cover"
             priority
           />
-          <div className="absolute top-2 left-2 bg-black/50 text-white px-2 py-1 rounded z-10">
+          <div className="absolute top-2 left-2 bg-black/50 text-white px-2 py-1 rounded z-10 text-sm md:text-base">
             {formatDateRange(sailing.departureDate, sailing.returnDate)}
           </div>
         </div>
@@ -100,13 +100,13 @@ export default function Card({ sailing }: CardProps) {
         {/* Right side - Content */}
         <div className="flex-1 flex flex-col">
           {/* Main content */}
-          <div className="p-6 flex-1">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xl font-semibold">
+          <div className="p-4 md:p-6 flex-1">
+            <div className="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-3">
+              <h3 className="text-xl md:text-2xl lg:text-3xl font-semibold leading-tight">
                 {convertTitleToPascalCase(sailing.name)}
               </h3>
 
-              <div className="flex flex-col items-end text-right gap-1">
+              <div className="flex flex-row md:flex-col items-center md:items-end text-right gap-2 md:gap-1">
                 <div className="relative h-6 w-24">
                   <Image
                     src={
@@ -127,11 +127,11 @@ export default function Card({ sailing }: CardProps) {
               </div>
             </div>
             <div className="mb-3">
-              <div className="text-gray-700 flex items-center gap-2">
+              <div className="text-gray-700 flex flex-wrap items-center gap-2 text-sm md:text-base">
                 <span>{sailing.region}</span>
                 <span className="ml-2">{sailing.duration} nights</span>
                 {sailing.ship?.rating && sailing.ship.rating > 0 && (
-                  <div className="flex items-center gap-1 ml-4">
+                  <div className="flex items-center gap-1 ml-0 md:ml-4">
                     <svg
                       className="w-4 h-4 text-yellow-400"
                       fill="currentColor"
@@ -149,11 +149,11 @@ export default function Card({ sailing }: CardProps) {
             </div>
 
             {sailing.itinerary.length > 0 && (
-              <div className="flex flex-wrap items-center gap-y-2 text-gray-600 mb-4 max-h-[4.5rem]">
+              <div className="flex flex-wrap items-center gap-y-2 text-gray-600 mb-4 max-h-[4.5rem] text-sm md:text-base">
                 {sailing.itinerary.map((stop, index) => (
                   <span
                     key={`${stop}-${index}`}
-                    className="flex items-center text-sm"
+                    className="flex items-center"
                   >
                     {getCityFromLocation(stop)}
                     {index < sailing.itinerary.length - 1 && (
@@ -178,15 +178,14 @@ export default function Card({ sailing }: CardProps) {
           </div>
 
           {/* Gray footer */}
-
-          <div className="bg-gray-50 p-6 border-t border-gray-100 flex justify-end">
+          <div className="bg-gray-50 p-4 md:p-6 border-t border-gray-100 flex flex-col md:flex-row items-center md:justify-end gap-4 md:gap-8">
             {sailing.price && (
-              <div className="text-right mr-8">
+              <div className="text-center md:text-right">
                 <p className="text-sm text-gray-600">Interior from</p>
-                <p className="text-lg font-bold">${sailing.price}</p>
+                <p className="text-lg md:text-xl font-bold">${sailing.price}</p>
               </div>
             )}
-            <button className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition-colors">
+            <button className="w-full md:w-auto bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition-colors">
               See sailings
             </button>
           </div>
