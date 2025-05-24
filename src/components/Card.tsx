@@ -1,6 +1,6 @@
 import Image from "next/image";
 import type Sailing from "@/components/SailingsInterface";
-import { StarIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
+import { StarIcon, ArrowRightIcon } from "@heroicons/react/20/solid";
 
 const DEFAULT_IMAGE_URL = "/default_ship_image.jpg";
 const SEABOURN_DEFAULT_IMAGE = "/seabourn_logo.jpg";
@@ -152,8 +152,8 @@ export default function Card({ sailing }: CardProps) {
                   >
                     {getCityFromLocation(stop)}
                     {index < sailing.itinerary.length - 1 && (
-                      <ChevronRightIcon
-                        className="w-3 h-3 mx-1 text-blue-600"
+                      <ArrowRightIcon
+                        className="w-4 h-4 mx-1 text-blue-600"
                         aria-hidden="true"
                       />
                     )}
