@@ -1,3 +1,5 @@
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
+
 interface PaginationProps {
   /** The currently active page number (1-based indexing) */
   currentPage: number;
@@ -76,19 +78,7 @@ export default function Pagination({
         className="p-1 sm:p-2 rounded-lg hover:bg-gray-100 hover:cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
         aria-label="Previous page"
       >
-        <svg
-          className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M15 19l-7-7 7-7"
-          />
-        </svg>
+        <ChevronLeftIcon className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
       </button>
 
       {/* Page numbers */}
@@ -97,7 +87,7 @@ export default function Pagination({
           key={pageNum}
           onClick={() => typeof pageNum === "number" && onPageChange(pageNum)}
           disabled={typeof pageNum === "string"}
-          className={`px-2 py-1 sm:px-3 sm:py-2 rounded-full text-sm sm:text-base font-bold ${
+          className={`w-8 h-8 flex items-center justify-center rounded-full text-sm sm:text-base font-bold ${
             typeof pageNum === "string"
               ? "cursor-default"
               : currentPage === pageNum
@@ -118,19 +108,7 @@ export default function Pagination({
         className="p-1 sm:p-2 rounded-lg hover:bg-gray-100 hover:cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
         aria-label="Next page"
       >
-        <svg
-          className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M9 5l7 7-7 7"
-          />
-        </svg>
+        <ChevronRightIcon className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
       </button>
     </nav>
   );

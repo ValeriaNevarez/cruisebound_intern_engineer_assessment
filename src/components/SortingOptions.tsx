@@ -76,7 +76,7 @@ export default function SortingOptions({ onSortChangeAction }: SortingOptionsPro
                 onSortChangeAction(option.id as SortOption, option.direction);
                 setIsOpen(false);
               }}
-              className={`w-full text-left px-4 py-2 text-base hover:bg-gray-100
+              className={`w-full text-left px-4 py-2 text-base hover:bg-gray-100 cursor-pointer
                 ${
                   activeOption === option.id && sortDirection === option.direction
                     ? "text-blue-600"
