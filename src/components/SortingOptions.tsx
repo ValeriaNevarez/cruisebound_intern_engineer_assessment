@@ -1,9 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-
-type SortOption = "price" | "departureDate" | "duration";
-type SortDirection = "asc" | "desc";
+import { SortOption, SortDirection, SORT_OPTIONS, SORT_DIRECTIONS } from "../types/SortingOptions";
 
 interface SortingOptionsProps {
   /** The callback function to handle the sort change action */
@@ -35,30 +33,19 @@ export default function SortingOptions({ onSortChangeAction }: SortingOptionsPro
     };
   }, []);
 
-  const handleSortChange = (option: SortOption) => {
-    if (option === activeOption) {
-      // If selecting the same option, toggle direction
-      const newDirection = sortDirection === "asc" ? "desc" : "asc";
-      setSortDirection(newDirection);
-      onSortChangeAction(option, newDirection);
-    } else {
-      // If selecting a new option, set it as active with ascending direction
-      setActiveOption(option);
-      setSortDirection("asc");
-      onSortChangeAction(option, "asc");
-    }
-    setIsOpen(false);
-  };
-
   const getDirectionLabel = () => {
-    return sortDirection === "asc" ? "Lowest first" : "Highest first";
+    return SORT_DIRECTIONS.find(dir => dir.value === sortDirection)?.label || "";
   };
 
-  const options = [
-    { id: "price", label: "Price" },
-    { id: "departureDate", label: "Departure Date" },
-    { id: "duration", label: "Duration" },
-  ];
+  const getExpandedOptions = () => {
+    return SORT_OPTIONS.flatMap((option) =>
+      SORT_DIRECTIONS.map((direction) => ({
+        id: option.id,
+        label: `${option.label} (${direction.label})`,
+        direction: direction.value as SortDirection,
+      }))
+    );
+  };
 
   return (
     <div className="relative ml-auto" ref={dropdownRef}>
@@ -70,7 +57,7 @@ export default function SortingOptions({ onSortChangeAction }: SortingOptionsPro
         >
           <div className="flex flex-col items-start">
             <span className="font-medium text-base">
-              {options.find((opt) => opt.id === activeOption)?.label}
+              {SORT_OPTIONS.find((opt) => opt.id === activeOption)?.label}
             </span>
             <span className="text-sm text-gray-500">{getDirectionLabel()}</span>
           </div>
@@ -79,14 +66,21 @@ export default function SortingOptions({ onSortChangeAction }: SortingOptionsPro
       </div>
 
       {isOpen && (
-        <div className="absolute right-0 mt-1 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-20">
-          {options.map((option) => (
+        <div className="absolute right-0 mt-1 w-64 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-20">
+          {getExpandedOptions().map((option) => (
             <button
-              key={option.id}
-              onClick={() => handleSortChange(option.id as SortOption)}
+              key={`${option.id}-${option.direction}`}
+              onClick={() => {
+                setActiveOption(option.id as SortOption);
+                setSortDirection(option.direction);
+                onSortChangeAction(option.id as SortOption, option.direction);
+                setIsOpen(false);
+              }}
               className={`w-full text-left px-4 py-2 text-base hover:bg-gray-100
                 ${
-                  activeOption === option.id ? "text-blue-600" : "text-gray-700"
+                  activeOption === option.id && sortDirection === option.direction
+                    ? "text-blue-600"
+                    : "text-gray-700"
                 }`}
             >
               {option.label}

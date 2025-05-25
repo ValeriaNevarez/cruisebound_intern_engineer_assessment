@@ -6,6 +6,7 @@ import TotalResultCount from "@/components/TotalResultCount";
 import type Sailing from "@/interfaces/SailingsInterface";
 import SailingList from "@/components/SailingList";
 import ResetSorting from "@/components/ResetSorting";
+import { SortOption, SortDirection } from "../types/SortingOptions";
 
 interface HomePageProps {
   /** Initial array of sailings to display */
@@ -43,8 +44,8 @@ export default function HomePage({ initialSailings }: HomePageProps) {
   };
 
   const handleSort = (
-    option: "price" | "departureDate" | "duration",
-    direction: "asc" | "desc"
+    option: SortOption,
+    direction: SortDirection
   ) => {
     const sortedSailings = [...sailings].sort((a, b) => {
       let comparison = 0;
