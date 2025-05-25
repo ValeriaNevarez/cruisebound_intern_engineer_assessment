@@ -62,7 +62,8 @@ cruisebound_intern_engineer_assessment/
 ├── src/
 │   ├── app/          # Next.js app directory
 │   ├── components/   # React components
-│   ├── interfaces/   # TypeScript interfaces and types
+│   ├── interfaces/   # TypeScript interfaces
+│   ├── types/        # TypeScript types
 │   └── utils/        # Utility functions
 └── public/           # Static files
 ```
