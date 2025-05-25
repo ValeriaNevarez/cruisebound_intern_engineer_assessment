@@ -1,10 +1,12 @@
 import HomePage from "@/components/HomePage";
 import type Sailing from "@/interfaces/SailingsInterface";
 import { Suspense } from "react";
+import { getUniqueSailings } from "@/utils/SailingsInterfaceUtils";
 
 async function getSailings(): Promise<Sailing[]> {
   try {
     const res = await fetch("https://sandbox.cruisebound-qa.com/sailings", {
+      // In case the API is updated, we want to fetch the latest data.
       cache: "no-store",
       headers: {
         "Content-Type": "application/json",
@@ -27,13 +29,8 @@ async function getSailings(): Promise<Sailing[]> {
 
 export default async function Home() {
   const sailings = await getSailings();
-
   // Remove duplicate sailings because the API returns the same sailing multiple times.
-  const uniqueSailings = Array.from(
-    new Map(
-      sailings.map((sailing) => [JSON.stringify(sailing), sailing])
-    ).values()
-  );
+  const uniqueSailings = getUniqueSailings(sailings);
 
   return (
     <main>
