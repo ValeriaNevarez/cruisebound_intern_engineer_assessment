@@ -34,24 +34,16 @@ export function formatDateRange(startDate: string, endDate: string): string {
 
   // If years are different
   if (startYear !== endYear) {
-    return `${startMonth} ${startDay}, ${startYear} - ${endMonth} ${String(
-      endDay
-    ).padStart(2, "0")}, ${endYear}`;
+    return `${startMonth} ${startDay}, ${startYear} - ${endMonth} ${endDay}, ${endYear}`;
   }
 
   // If months are different
   if (startMonth !== endMonth) {
-    return `${startMonth} ${startDay}-${endMonth} ${String(endDay).padStart(
-      2,
-      "0"
-    )}, ${startYear}`;
+    return `${startMonth} ${startDay} - ${endMonth} ${endDay}, ${startYear}`;
   }
 
   // If only days are different
-  return `${startMonth} ${startDay}-${String(endDay).padStart(
-    2,
-    "0"
-  )}, ${startYear}`;
+  return `${startMonth} ${startDay}-${endDay}, ${startYear}`;
 }
 
 /**
@@ -80,14 +72,14 @@ export function getCityFromLocation(location: string): string {
     .replace(/\s*\([^)]*\)/g, "")
     .split(",")[0]
     .trim()
-    .replace(/Fort\s+/g, "Ft. ")
     .split(" ")
     .map((word) => {
       // Skip words that are already properly formatted (like Ft.)
       if (word.endsWith(".")) return word;
       return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
     })
-    .join(" ");
+    .join(" ")
+    .replace(/Fort\s+/g, "Ft. ");
 }
 
 /**
