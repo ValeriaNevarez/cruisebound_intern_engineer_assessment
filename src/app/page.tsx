@@ -5,9 +5,8 @@ import { getUniqueSailings } from "@/utils/SailingsInterfaceUtils";
 
 async function getSailings(): Promise<Sailing[]> {
   try {
+    // This will be executed at build time.
     const res = await fetch("https://sandbox.cruisebound-qa.com/sailings", {
-      // In case the API is updated, we want to fetch the latest data.
-      cache: "no-store",
       headers: {
         "Content-Type": "application/json",
       },
@@ -19,7 +18,6 @@ async function getSailings(): Promise<Sailing[]> {
     }
 
     const data = await res.json();
-    // TODO: Add type guard to ensure data.results is an array of Sailing.
     return data.results as Sailing[];
   } catch (error) {
     console.error("Error fetching sailings:", error);

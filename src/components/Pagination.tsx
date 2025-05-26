@@ -70,46 +70,48 @@ export default function Pagination({
   };
 
   return (
-    <nav className="flex items-center justify-center space-x-1 mt-4 bg-gray-100 px-2 py-1 sm:px-2 sm:py-1 px-1 py-0.5 rounded-lg inline-flex">
-      {/* Previous button */}
-      <button
-        onClick={() => currentPage > 1 && onPageChange(currentPage - 1)}
-        disabled={currentPage === 1}
-        className="p-1 sm:p-2 rounded-lg hover:bg-gray-100 hover:cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-        aria-label="Previous page"
-      >
-        <ChevronLeftIcon className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
-      </button>
-
-      {/* Page numbers */}
-      {getPageNumbers().map((pageNum) => (
+    <div className="flex items-center justify-center">
+      <nav className="flex items-center justify-center space-x-1 mt-4 bg-gray-100 px-2 py-1 sm:px-2 sm:py-1 px-1 py-0.5 rounded-lg inline-flex">
+        {/* Previous button */}
         <button
-          key={pageNum}
-          onClick={() => typeof pageNum === "number" && onPageChange(pageNum)}
-          disabled={typeof pageNum === "string"}
-          className={`w-8 h-8 flex items-center justify-center rounded-full text-sm sm:text-base font-bold ${
-            typeof pageNum === "string"
-              ? "cursor-default"
-              : currentPage === pageNum
-              ? "bg-white text-blue-600 hover:cursor-pointer"
-              : "text-gray-600 hover:bg-gray-100 hover:cursor-pointer"
-          }`}
+          onClick={() => currentPage > 1 && onPageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="p-1 sm:p-2 rounded-lg hover:bg-gray-100 hover:cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+          aria-label="Previous page"
         >
-          {typeof pageNum === "string" ? "..." : pageNum}
+          <ChevronLeftIcon className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
         </button>
-      ))}
 
-      {/* Next button */}
-      <button
-        onClick={() =>
-          currentPage < totalPages && onPageChange(currentPage + 1)
-        }
-        disabled={currentPage === totalPages}
-        className="p-1 sm:p-2 rounded-lg hover:bg-gray-100 hover:cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-        aria-label="Next page"
-      >
-        <ChevronRightIcon className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
-      </button>
-    </nav>
+        {/* Page numbers */}
+        {getPageNumbers().map((pageNum) => (
+          <button
+            key={pageNum}
+            onClick={() => typeof pageNum === "number" && onPageChange(pageNum)}
+            disabled={typeof pageNum === "string"}
+            className={`w-8 h-8 flex items-center justify-center rounded-full text-sm sm:text-base font-bold ${
+              typeof pageNum === "string"
+                ? "cursor-default"
+                : currentPage === pageNum
+                ? "bg-white text-blue-600 hover:cursor-pointer"
+                : "text-gray-600 hover:bg-gray-100 hover:cursor-pointer"
+            }`}
+          >
+            {typeof pageNum === "string" ? "..." : pageNum}
+          </button>
+        ))}
+
+        {/* Next button */}
+        <button
+          onClick={() =>
+            currentPage < totalPages && onPageChange(currentPage + 1)
+          }
+          disabled={currentPage === totalPages}
+          className="p-1 sm:p-2 rounded-lg hover:bg-gray-100 hover:cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+          aria-label="Next page"
+        >
+          <ChevronRightIcon className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
+        </button>
+      </nav>
+    </div>
   );
 }

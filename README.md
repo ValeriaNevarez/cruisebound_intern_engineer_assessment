@@ -6,22 +6,25 @@ This is my submission for the Cruisebound Intern Engineer Assessment.
 
 The UI is designed to match the spec in the instructions. I took the following design decisions:
 
-1. **Initial Page Sorting**
+1. **Static vs Dynamic rendering**
+   - Decided to fetch the API statically at build time to make the website faster. 
+
+2. **Initial Page Sorting**
 
    - The default initial page is sorted by nearest departure date.
      This is to show the most immediately available cruises to potential clients,
      improving conversion by highlighting trips they can book soon.
 
-2. **Unique Sailings Display**
+3. **Unique Sailings Display**
 
    - Only shows unique sailings since API returns duplicates.
    - "Total results count" reflects number of unique sailings.
 
-3. **UI Controls**
+4. **UI Controls**
 
    - Changed "Reset filters" to "Reset sorting" button since no filters are present.
 
-4. **Edge Cases Handling**
+5. **Edge Cases Handling**
 
    - Card component height adjusts for longer itineraries.
    - Default images for missing ship images or logos.
@@ -30,9 +33,13 @@ The UI is designed to match the spec in the instructions. I took the following d
      - Removed country information and parenthetical content.
      - Added common abbreviations (e.g., Fort → Ft.).
 
-5. **Responsive Design**
+6. **Responsive Design**
    - Cards render vertically on smaller screens.
    - Ensures full visibility of both images and itinerary information.
+
+7. **Pagination**
+   - Rendered pagination element with UI as shown in the PDF. 
+   - Aligned it to the center of the page, so UI feels smoother. 
 
 ## 💻 Software Engineering Best Practices
 
